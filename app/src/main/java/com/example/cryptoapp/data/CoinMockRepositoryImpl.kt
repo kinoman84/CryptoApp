@@ -11,6 +11,9 @@ class CoinMockRepositoryImpl : CoinRepository {
     private val _coinLiveData = MutableLiveData<List<CoinInfo>>()
     private val coinLiveData get() = _coinLiveData
 
+    private val _coinDetailsInfo = MutableLiveData<CoinInfo>()
+    private val coinDetailsInfo get() = _coinDetailsInfo
+
     init {
         _coinLiveData.value = listOf(
             CoinInfo(
@@ -43,7 +46,9 @@ class CoinMockRepositoryImpl : CoinRepository {
     }
 
     override fun getCoinInfo(id: Int): LiveData<CoinInfo> {
-        TODO("Not yet implemented")
+        val info = coinLiveData.value?.find { it.id == id }
+        info?.let { _coinDetailsInfo.value = it }
+        return coinDetailsInfo
     }
 
     override fun refreshData() {
