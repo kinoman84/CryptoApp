@@ -1,5 +1,6 @@
 package com.example.cryptoapp.presentation.coinlist
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,10 +17,15 @@ class CoinListFragment : Fragment() {
 
     private lateinit var viewModel: CoinListViewModel
     private lateinit var adapter: CoinListAdapter
+    private lateinit var onItemSelectedListener: OnItemSelectedListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnItemSelectedListener) {
+            onItemSelectedListener = context
+        } else {
+            throw RuntimeException("Must implements OnItemSelectedListener")
+        }
     }
 
     override fun onCreateView(
@@ -33,9 +39,16 @@ class CoinListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[CoinListViewModel::class.java]
         adapter = CoinListAdapter(requireContext())
+        adapter.onItemClickListener = {
+            onItemSelectedListener.onItemSelect(it)
+        }
         rv_coin_price_list.adapter = adapter
 
         viewModel.coinList.observe(viewLifecycleOwner, Observer { adapter.coinList = it } )
+    }
+
+    interface OnItemSelectedListener {
+        fun onItemSelect(coinId: Int)
     }
 
     companion object {

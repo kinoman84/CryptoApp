@@ -6,15 +6,18 @@ import com.example.cryptoapp.R
 import com.example.cryptoapp.presentation.coininfo.CoinDetailsFragment
 import com.example.cryptoapp.presentation.coinlist.CoinListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoinListFragment.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            //openListFragment()
-            openDetailsFragment(1182)
+            openListFragment()
         }
+    }
+
+    override fun onItemSelect(coinId: Int) {
+        openDetailsFragment(coinId)
     }
 
     private fun openListFragment() {

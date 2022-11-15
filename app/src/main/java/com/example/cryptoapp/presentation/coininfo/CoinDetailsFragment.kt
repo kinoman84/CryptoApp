@@ -9,7 +9,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
 import com.example.cryptoapp.domain.entity.CoinInfo
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_coin_detail.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
+import kotlinx.android.synthetic.main.fragment_coin_details.ivLogoCoin
+import kotlinx.android.synthetic.main.fragment_coin_details.tvFromSymbol
+import kotlinx.android.synthetic.main.fragment_coin_details.tvLastMarket
+import kotlinx.android.synthetic.main.fragment_coin_details.tvLastUpdate
+import kotlinx.android.synthetic.main.fragment_coin_details.tvMaxPrice
+import kotlinx.android.synthetic.main.fragment_coin_details.tvMinPrice
+import kotlinx.android.synthetic.main.fragment_coin_details.tvPrice
+import kotlinx.android.synthetic.main.fragment_coin_details.tvToSymbol
 
 class CoinDetailsFragment : Fragment() {
     private var coinId: Int = 0
@@ -36,7 +46,16 @@ class CoinDetailsFragment : Fragment() {
     }
 
     private fun updateUi(coinInfo: CoinInfo) {
-        tvPrice.text = coinInfo.priceInfo.price
+        with(coinInfo.priceInfo) {
+            tvPrice.text = price
+            tvMinPrice.text = lowDay
+            tvMaxPrice.text = highDay
+            tvLastMarket.text = lastMarket
+            tvLastUpdate.text = getFormattedTime()
+            tvFromSymbol.text = fromSymbol
+            tvToSymbol.text = toSymbol
+        }
+        Picasso.get().load(coinInfo.getFullImageUrl()).into(ivLogoCoin)
     }
 
     companion object {

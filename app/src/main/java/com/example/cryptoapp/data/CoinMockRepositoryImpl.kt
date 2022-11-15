@@ -24,7 +24,10 @@ class CoinMockRepositoryImpl : CoinRepository {
                     "16547.22",
                     "BTC",
                     "USD",
-                    1668355635
+                    1668355635,
+                    "16509.15",
+                    "17091.76",
+                    "Kraken"
                 )
             ),
             CoinInfo(
@@ -35,7 +38,10 @@ class CoinMockRepositoryImpl : CoinRepository {
                     "1228.62",
                     "ETH",
                     "USD",
-                    1668355636
+                    1668355636,
+                    "1234.46",
+                    "1288.55",
+                    "Coinbase"
                 )
             )
         )
