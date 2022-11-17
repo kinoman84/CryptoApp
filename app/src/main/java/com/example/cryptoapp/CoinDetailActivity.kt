@@ -23,11 +23,11 @@ class CoinDetailActivity : AppCompatActivity() {
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: ""
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         viewModel.getDetailInfo(fromSymbol).observe(this, Observer {
-            tvPrice.text = it.price
-            tvMinPrice.text = it.lowDay
-            tvMaxPrice.text = it.highDay
-            tvLastMarket.text = it.lastMarket
-            tvLastUpdate.text = it.getFormattedTime()
+            tv_price.text = it.price
+            tv_min_price.text = it.lowDay
+            tv_max_price.text = it.highDay
+            tv_lLast_market.text = it.lastMarket
+            tv_last_update.text = it.getFormattedTime()
             tvFromSymbol.text = it.fromSymbol
             tvToSymbol.text = it.toSymbol
             Picasso.get().load(it.getFullImageUrl()).into(ivLogoCoin)

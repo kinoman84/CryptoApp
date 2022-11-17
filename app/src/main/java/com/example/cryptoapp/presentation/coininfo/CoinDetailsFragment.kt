@@ -1,29 +1,22 @@
 package com.example.cryptoapp.presentation.coininfo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.cryptoapp.R
+import com.example.cryptoapp.databinding.FragmentCoinDetailsBinding
 import com.example.cryptoapp.domain.entity.CoinInfo
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_coin_detail.*
-import kotlinx.android.synthetic.main.fragment_coin_details.*
-import kotlinx.android.synthetic.main.fragment_coin_details.ivLogoCoin
-import kotlinx.android.synthetic.main.fragment_coin_details.tvFromSymbol
-import kotlinx.android.synthetic.main.fragment_coin_details.tvLastMarket
-import kotlinx.android.synthetic.main.fragment_coin_details.tvLastUpdate
-import kotlinx.android.synthetic.main.fragment_coin_details.tvMaxPrice
-import kotlinx.android.synthetic.main.fragment_coin_details.tvMinPrice
-import kotlinx.android.synthetic.main.fragment_coin_details.tvPrice
-import kotlinx.android.synthetic.main.fragment_coin_details.tvToSymbol
 
 class CoinDetailsFragment : Fragment() {
     private var coinId: Int = 0
     private lateinit var viewModel: CoinDetailsViewModel
+
+    private var _binding: FragmentCoinDetailsBinding? = null
+    private val binding: FragmentCoinDetailsBinding
+        get() = _binding ?: throw RuntimeException("FragmentCoinDetailsBinding == null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,27 +28,28 @@ class CoinDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_coin_details, container, false)
+    ): View {
+        _binding = FragmentCoinDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[CoinDetailsViewModel::class.java]
-        viewModel.getCoinDetails(coinId).observe(viewLifecycleOwner, Observer { updateUi(it) })
+        viewModel.getCoinDetails(coinId).observe(viewLifecycleOwner) { updateUi(it) }
     }
 
     private fun updateUi(coinInfo: CoinInfo) {
         with(coinInfo.priceInfo) {
-            tvPrice.text = price
-            tvMinPrice.text = lowDay
-            tvMaxPrice.text = highDay
-            tvLastMarket.text = lastMarket
-            tvLastUpdate.text = getFormattedTime()
-            tvFromSymbol.text = fromSymbol
-            tvToSymbol.text = toSymbol
+            binding.tvPrice.text = price
+            binding.tvMinPrice.text = lowDay
+            binding.tvMaxPrice.text = highDay
+            binding.tvLLastMarket.text = lastMarket
+            binding.tvLastUpdate.text = getFormattedTime()
+            binding.tvFromSymbol.text = fromSymbol
+            binding.tvToSymbol.text = toSymbol
+            Picasso.get().load(coinInfo.getFullImageUrl()).into(binding.ivLogoCoin)
         }
-        Picasso.get().load(coinInfo.getFullImageUrl()).into(ivLogoCoin)
     }
 
     companion object {

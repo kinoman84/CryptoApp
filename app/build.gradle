@@ -28,10 +28,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    /*kotlinOptions {
-        jvmTarget = '11'
-    }*/
+    buildFeatures {
+        viewBinding true
+    }
 
     namespace 'com.example.cryptoapp'
 }
