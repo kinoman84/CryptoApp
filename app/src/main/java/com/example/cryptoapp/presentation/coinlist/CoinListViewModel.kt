@@ -10,18 +10,16 @@ import kotlinx.coroutines.launch
 
 class CoinListViewModel(application: Application): AndroidViewModel(application) {
 
-
     private val repository = CoinRepositoryImpl(application)
 
     private val getCoinListUseCase = GetCoinListUseCase(repository)
     private val refreshDataUseCase = RefreshDataUseCase(repository)
+    val coinList = getCoinListUseCase.getCoinList()
 
     init {
         viewModelScope.launch {
             refreshDataUseCase.refreshData()
         }
     }
-
-    val coinList = getCoinListUseCase.getCoinList()
 
 }

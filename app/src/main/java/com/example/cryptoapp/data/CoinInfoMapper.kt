@@ -1,6 +1,8 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.local.CoinInfoDbModel
+import com.example.cryptoapp.data.remote.dto.DataItemDto
+import com.example.cryptoapp.data.remote.dto.TopCoinsResponseDto
 import com.example.cryptoapp.domain.entity.CoinInfo
 import com.example.cryptoapp.domain.entity.CoinPriceInfo
 
@@ -39,5 +41,20 @@ class CoinInfoMapper {
 
     fun mapListDbModelToListEntity(list: List<CoinInfoDbModel>) = list.map {
         dbModelToEntity(it)
+    }
+
+    fun dataDtoToDbModel(dto: DataItemDto): CoinInfoDbModel {
+        return CoinInfoDbModel(
+            id = dto.coinInfo.id.toInt(),
+            name = dto.coinInfo.name,
+            imageUrl = dto.coinInfo.imageUrl,
+            price = dto.raw.usd.price,
+            fromSymbol = dto.raw.usd.fromSymbol,
+            toSymbol = dto.raw.usd.toSymbol,
+            lastUpdate = dto.raw.usd.lastUpdate,
+            lowDay = dto.raw.usd.lowDay,
+            highDay = dto.raw.usd.highDay,
+            lastMarket = dto.raw.usd.lastMarket
+        )
     }
 }

@@ -1,6 +1,6 @@
 package com.example.cryptoapp.domain.entity
 
-import com.example.cryptoapp.api.ApiFactory
+import com.example.cryptoapp.data.remote.api.ApiFactory
 
 data class CoinInfo(
     val id: Int,

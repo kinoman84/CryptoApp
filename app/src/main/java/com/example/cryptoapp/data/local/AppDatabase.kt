@@ -28,7 +28,5 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    //TODO удалить старый DAO
-    //abstract fun coinPriceInfoDao(): CoinPriceInfoDao
     abstract fun coinInfoDao(): CoinInfoDao
 }

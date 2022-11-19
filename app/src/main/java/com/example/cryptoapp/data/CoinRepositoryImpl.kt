@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.cryptoapp.data.local.AppDatabase
-import com.example.cryptoapp.data.remote.RemoteMockStorage
+import com.example.cryptoapp.data.remote.api.ApiFactory
 import com.example.cryptoapp.domain.entity.CoinInfo
 import com.example.cryptoapp.domain.repository.CoinRepository
 
 class CoinRepositoryImpl(application: Application) : CoinRepository {
 
     private val localSource = AppDatabase.getInstance(application).coinInfoDao()
-    private val remoteSource = RemoteMockStorage()
+    private val remoteSource = ApiFactory.apiService
     private val mapper = CoinInfoMapper()
 
     override fun getCoinList(): LiveData<List<CoinInfo>> {
@@ -27,8 +27,8 @@ class CoinRepositoryImpl(application: Application) : CoinRepository {
     }
 
     override suspend fun refreshData() {
-        val list = remoteSource.getCoinList().map {
-            mapper.entityToDbModel(it)
+        val list = remoteSource.getTopCoinsInfo().dataList.map {
+            mapper.dataDtoToDbModel(it)
         }
         localSource.insertPriceList(list)
     }
