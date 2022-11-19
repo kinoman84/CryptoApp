@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data
+package com.example.cryptoapp.data.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,16 +6,9 @@ import com.example.cryptoapp.domain.entity.CoinInfo
 import com.example.cryptoapp.domain.entity.CoinPriceInfo
 import com.example.cryptoapp.domain.repository.CoinRepository
 
-class CoinMockRepositoryImpl : CoinRepository {
+class RemoteMockStorage {
 
-    private val _coinLiveData = MutableLiveData<List<CoinInfo>>()
-    private val coinLiveData get() = _coinLiveData
-
-    private val _coinDetailsInfo = MutableLiveData<CoinInfo>()
-    private val coinDetailsInfo get() = _coinDetailsInfo
-
-    init {
-        _coinLiveData.value = listOf(
+    private var coinList = listOf(
             CoinInfo(
                 1182,
                 "BTC",
@@ -45,20 +38,8 @@ class CoinMockRepositoryImpl : CoinRepository {
                 )
             )
         )
-    }
 
-    override fun getCoinList(): LiveData<List<CoinInfo>> {
-        return coinLiveData
+    fun getCoinList(): List<CoinInfo> {
+        return coinList
     }
-
-    override fun getCoinInfo(id: Int): LiveData<CoinInfo> {
-        val info = coinLiveData.value?.find { it.id == id }
-        info?.let { _coinDetailsInfo.value = it }
-        return coinDetailsInfo
-    }
-
-    override fun refreshData() {
-        TODO("Not yet implemented")
-    }
-
 }

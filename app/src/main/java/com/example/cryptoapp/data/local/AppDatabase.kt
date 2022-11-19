@@ -1,4 +1,4 @@
-package com.example.cryptoapp.database
+package com.example.cryptoapp.data.local
 
 import android.content.Context
 import androidx.room.Database
@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.cryptoapp.pojo.CoinPriceInfo
 
-@Database(entities = [CoinPriceInfo::class], version = 1, exportSchema = false)
+@Database(entities = [CoinInfoDbModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     companion object {
 
@@ -22,12 +22,17 @@ abstract class AppDatabase : RoomDatabase() {
                         context,
                         AppDatabase::class.java,
                         DB_NAME
-                    ).build()
+                    )
+                            //TODO убрать allowMainThreadQueries
+                        .allowMainThreadQueries()
+                        .build()
                 db = instance
                 return instance
             }
         }
     }
 
-    abstract fun coinPriceInfoDao(): CoinPriceInfoDao
+    //TODO удалить старый DAO
+    //abstract fun coinPriceInfoDao(): CoinPriceInfoDao
+    abstract fun coinInfoDao(): CoinInfoDao
 }

@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.cryptoapp.api.ApiFactory
-import com.example.cryptoapp.database.AppDatabase
+import com.example.cryptoapp.data.local.AppDatabase
 import com.example.cryptoapp.pojo.CoinPriceInfo
 import com.example.cryptoapp.pojo.CoinPriceInfoRawData
 import com.google.gson.Gson
@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 //TODO удалить этот класс
 class CoinViewModel(application: Application) : AndroidViewModel(application) {
 
+    /*
     private val db = AppDatabase.getInstance(application)
     private val compositeDisposable = CompositeDisposable()
 
@@ -71,4 +72,6 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         compositeDisposable.dispose()
     }
+
+     */
 }
