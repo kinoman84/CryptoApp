@@ -22,10 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
                         context,
                         AppDatabase::class.java,
                         DB_NAME
-                    )
-                            //TODO убрать allowMainThreadQueries
-                        .allowMainThreadQueries()
-                        .build()
+                    ).build()
                 db = instance
                 return instance
             }

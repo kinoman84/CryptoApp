@@ -8,6 +8,8 @@ import com.example.cryptoapp.data.remote.RemoteMockStorage
 import com.example.cryptoapp.domain.entity.CoinInfo
 import com.example.cryptoapp.domain.entity.CoinPriceInfo
 import com.example.cryptoapp.domain.repository.CoinRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class CoinRepositoryImpl(application: Application) : CoinRepository {
 
@@ -15,9 +17,7 @@ class CoinRepositoryImpl(application: Application) : CoinRepository {
     private val remoteSource = RemoteMockStorage()
     private val mapper = CoinInfoMapper()
 
-    init {
-        refreshData()
-    }
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun getCoinList(): LiveData<List<CoinInfo>> {
         return Transformations.map(localSource.getPriceList()) { coinInfoDbModelList ->
@@ -29,7 +29,8 @@ class CoinRepositoryImpl(application: Application) : CoinRepository {
         TODO("Not yet implemented")
     }
 
-    override fun refreshData() {
+    //TODO запустить при получении
+    override suspend fun refreshData() {
         val list = remoteSource.getCoinList().map {
             mapper.entityToDbModel(it)
         }

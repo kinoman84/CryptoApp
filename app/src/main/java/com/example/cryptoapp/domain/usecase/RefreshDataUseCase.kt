@@ -4,7 +4,7 @@ import com.example.cryptoapp.domain.repository.CoinRepository
 
 class RefreshDataUseCase(private val repository: CoinRepository) {
 
-    fun refreshData() {
+    suspend fun refreshData() {
         repository.refreshData()
     }
 }
