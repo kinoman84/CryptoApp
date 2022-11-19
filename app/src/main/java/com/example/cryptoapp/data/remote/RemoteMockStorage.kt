@@ -1,10 +1,7 @@
 package com.example.cryptoapp.data.remote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.cryptoapp.domain.entity.CoinInfo
 import com.example.cryptoapp.domain.entity.CoinPriceInfo
-import com.example.cryptoapp.domain.repository.CoinRepository
 
 class RemoteMockStorage {
 
