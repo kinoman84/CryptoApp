@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.R
-import kotlinx.android.synthetic.main.fragment_coin_list.*
 
 class CoinListFragment : Fragment() {
 
@@ -39,7 +39,9 @@ class CoinListFragment : Fragment() {
         adapter.onItemClickListener = {
             onItemSelectedListener.onItemSelect(it)
         }
-        rv_coin_price_list.adapter = adapter
+        view.findViewById<RecyclerView>(R.id.rv_coin_price_list).apply {
+            adapter = this@CoinListFragment.adapter
+        }
 
         viewModel.coinList.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
