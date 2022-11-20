@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity(), CoinListFragment.OnItemSelectedListene
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
+            //TODO добавить горизонтальную вёрстку с двумя фрагментами
             openListFragment()
         }
     }

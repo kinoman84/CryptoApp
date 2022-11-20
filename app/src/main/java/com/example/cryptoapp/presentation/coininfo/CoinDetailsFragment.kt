@@ -45,10 +45,10 @@ class CoinDetailsFragment : Fragment() {
             binding.tvMinPrice.text = lowDay
             binding.tvMaxPrice.text = highDay
             binding.tvLLastMarket.text = lastMarket
-            binding.tvLastUpdate.text = getFormattedTime()
+            binding.tvLastUpdate.text = lastUpdate
             binding.tvFromSymbol.text = fromSymbol
             binding.tvToSymbol.text = toSymbol
-            Picasso.get().load(coinInfo.getFullImageUrl()).into(binding.ivLogoCoin)
+            Picasso.get().load(coinInfo.fullImageUrl).into(binding.ivLogoCoin)
         }
     }
 

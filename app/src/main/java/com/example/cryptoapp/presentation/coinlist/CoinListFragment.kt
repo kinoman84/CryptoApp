@@ -41,7 +41,7 @@ class CoinListFragment : Fragment() {
         }
         rv_coin_price_list.adapter = adapter
 
-        viewModel.coinList.observe(viewLifecycleOwner) { adapter.coinList = it }
+        viewModel.coinList.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
 
     interface OnItemSelectedListener {

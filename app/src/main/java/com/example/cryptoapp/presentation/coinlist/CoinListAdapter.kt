@@ -3,6 +3,7 @@ package com.example.cryptoapp.presentation.coinlist
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ItemCoinInfoBinding
@@ -10,13 +11,8 @@ import com.example.cryptoapp.domain.entity.CoinInfo
 import com.squareup.picasso.Picasso
 
 class CoinListAdapter(private val context: Context) :
-    RecyclerView.Adapter<CoinListAdapter.CoinItemViewHolder>() {
+    ListAdapter<CoinInfo, CoinListAdapter.CoinItemViewHolder>(CoinListDiffCallback()) {
 
-    var coinList: List<CoinInfo> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
     var onItemClickListener: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinItemViewHolder {
@@ -26,12 +22,8 @@ class CoinListAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: CoinItemViewHolder, position: Int) {
-        val coin = coinList[position]
+        val coin = getItem(position)
         holder.bind(coin)
-    }
-
-    override fun getItemCount(): Int {
-        return coinList.size
     }
 
     inner class CoinItemViewHolder(private val binding: ItemCoinInfoBinding) :
@@ -45,8 +37,8 @@ class CoinListAdapter(private val context: Context) :
                     String.format(symbolsTemplate, priceInfo.fromSymbol, priceInfo.toSymbol)
                 binding.tvPrice.text = priceInfo.price
                 binding.tvLastUpdate.text =
-                    String.format(lastUpdateTemplate, priceInfo.getFormattedTime())
-                Picasso.get().load(getFullImageUrl()).into(binding.ivLogoCoin)
+                    String.format(lastUpdateTemplate, priceInfo.lastUpdate)
+                Picasso.get().load(fullImageUrl).into(binding.ivLogoCoin)
                 binding.root.setOnClickListener {
                     onItemClickListener?.invoke(coinInfo.id)
                 }

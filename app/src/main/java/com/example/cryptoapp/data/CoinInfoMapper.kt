@@ -1,13 +1,15 @@
 package com.example.cryptoapp.data
 
 import com.example.cryptoapp.data.local.CoinInfoDbModel
+import com.example.cryptoapp.data.remote.api.ApiFactory
 import com.example.cryptoapp.data.remote.dto.DataItemDto
 import com.example.cryptoapp.data.remote.dto.TopCoinsResponseDto
 import com.example.cryptoapp.domain.entity.CoinInfo
 import com.example.cryptoapp.domain.entity.CoinPriceInfo
+import com.example.cryptoapp.utils.convertTimestampToTime
 
 class CoinInfoMapper {
-    fun entityToDbModel (entity: CoinInfo): CoinInfoDbModel {
+/*    fun entityToDbModel(entity: CoinInfo): CoinInfoDbModel {
         return CoinInfoDbModel(
             id = entity.id,
             name = entity.name,
@@ -20,18 +22,18 @@ class CoinInfoMapper {
             highDay = entity.priceInfo.highDay,
             lastMarket = entity.priceInfo.lastMarket
         )
-    }
+    }*/
 
-    fun dbModelToEntity (dbModel: CoinInfoDbModel) : CoinInfo {
+    fun dbModelToEntity(dbModel: CoinInfoDbModel): CoinInfo {
         return CoinInfo(
             id = dbModel.id,
             name = dbModel.name ?: "",
-            imageUrl = dbModel.imageUrl ?: "",
+            fullImageUrl = getFullImageUrl(dbModel.imageUrl ?: ""),
             priceInfo = CoinPriceInfo(
                 price = dbModel.price ?: "",
                 fromSymbol = dbModel.fromSymbol ?: "",
                 toSymbol = dbModel.toSymbol,
-                lastUpdate = dbModel.lastUpdate,
+                lastUpdate = getFormattedTime(dbModel.lastUpdate),
                 lowDay = dbModel.lowDay,
                 highDay = dbModel.highDay,
                 lastMarket = dbModel.lastMarket
@@ -56,5 +58,13 @@ class CoinInfoMapper {
             highDay = dto.raw.usd.highDay,
             lastMarket = dto.raw.usd.lastMarket
         )
+    }
+
+    private fun getFullImageUrl(imageUrl: String): String {
+        return if (imageUrl.isBlank()) "" else ApiFactory.BASE_IMAGE_URL + imageUrl
+    }
+
+    private fun getFormattedTime(lastUpdate: Long?): String {
+        return if (lastUpdate == null) "" else convertTimestampToTime(lastUpdate)
     }
 }
