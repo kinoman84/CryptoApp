@@ -20,6 +20,6 @@ class CoinListViewModel(application: Application): AndroidViewModel(application)
         viewModelScope.launch {
             refreshDataUseCase.refreshData()
         }
+        refreshDataUseCase.startWorker()
     }
-
 }

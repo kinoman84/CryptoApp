@@ -7,4 +7,8 @@ class RefreshDataUseCase(private val repository: CoinRepository) {
     suspend fun refreshData() {
         repository.refreshData()
     }
+
+    fun startWorker() {
+        repository.startWorker()
+    }
 }

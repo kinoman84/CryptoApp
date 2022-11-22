@@ -7,4 +7,5 @@ interface CoinRepository {
     fun getCoinList() : LiveData<List<CoinInfo>>
     fun getCoinInfo(id: Int) : LiveData<CoinInfo>
     suspend fun refreshData()
+    fun startWorker()
 }
